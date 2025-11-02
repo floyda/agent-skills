@@ -1,6 +1,6 @@
 ---
 name: implementing-specs
-description: Implements Python features/fixes from spec-driven-dev artifacts (spec.md, plan.md, tasks.md). Writes tests first, writes production code, runs type checking and quality gates, manages task status with review checkpoints. Use when implementing specs, or when user says implement/build/execute/code from these specification files.
+description: Implements Python features/fixes from spec-driven-dev artifacts (requirements.md, plan.md, tasks.md). Writes tests first, writes production code, runs type checking and quality gates, manages task status with review checkpoints. Use when implementing specs, or when user says implement/build/execute/code from these specification files.
 ---
 
 # Spec Implementation
@@ -10,7 +10,7 @@ description: Implements Python features/fixes from spec-driven-dev artifacts (sp
 This skill provides a structured implementation workflow for executing software specifications created by the spec-driven-dev skill. It follows the practices and standards expected from a principal-level Python software developer, including test-driven development (TDD), type safety, comprehensive testing, and rigorous quality gates.
 
 The skill is designed to work with the three core artifacts produced by spec-driven-dev:
-- **spec.md**: Feature specification with requirements and success criteria
+- **requirements.md**: Feature specification with requirements and success criteria
 - **plan.md**: Implementation plan broken down into phases
 - **tasks.md**: Dependency-ordered task list with identifiers (T001, T002, etc.)
 
@@ -62,14 +62,14 @@ Run the validation script to ensure all required files exist and are well-formed
 python <SKILL_DIR>/scripts/validate_spec_artifacts.py <spec-directory>
 ```
 
-Expected output: ✅ confirmation that spec.md, plan.md, and tasks.md are present and properly structured.
+Expected output: ✅ confirmation that requirements.md, plan.md, and tasks.md are present and properly structured.
 
 If validation fails, stop and report the issues to the user. Do not proceed with implementation until all artifacts are valid.
 
 #### 1.3 Review the Spec Artifacts
 
 Read all three artifacts thoroughly to understand:
-- **spec.md**: What is being built, requirements, success criteria
+- **requirements.md**: What is being built, requirements, success criteria
 - **plan.md**: Implementation phases and their objectives
 - **tasks.md**: Specific tasks to complete, dependencies, and order
 
@@ -203,7 +203,7 @@ Review the output and verify all tasks are marked appropriately (completed, bloc
 
 Provide a comprehensive summary:
 
-**Deliverables:** What was implemented (reference spec.md), phases completed, documentation updates
+**Deliverables:** What was implemented (reference requirements.md), phases completed, documentation updates
 
 **Quality Metrics:** Test count, coverage percentages, type checking status, linting status
 

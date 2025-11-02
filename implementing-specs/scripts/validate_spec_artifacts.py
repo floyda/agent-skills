@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Validate spec artifacts (spec.md, plan.md, tasks.md) before implementation.
+Validate spec artifacts (requirements.md, plan.md, tasks.md) before implementation.
 
 This script ensures that all required artifacts from spec-driven-dev are present
 and well-formed before beginning implementation.
@@ -18,10 +18,10 @@ from pathlib import Path
 from typing import List, Tuple
 
 # Required files
-REQUIRED_FILES = ["spec.md", "plan.md", "tasks.md"]
+REQUIRED_FILES = ["requirements.md", "plan.md", "tasks.md"]
 
-# Required sections in spec.md
-SPEC_SECTIONS = [
+# Required sections in requirements.md
+REQUIREMENTS_SECTIONS = [
     "## Overview",
     "## Requirements",
     "## Success Criteria"
@@ -104,12 +104,12 @@ def validate_spec_directory(spec_dir: Path) -> Tuple[bool, List[str]]:
 
     try:
         # Validate required files exist
-        spec_file = validate_file_exists(spec_dir, "spec.md")
+        requirements_file = validate_file_exists(spec_dir, "requirements.md")
         plan_file = validate_file_exists(spec_dir, "plan.md")
         tasks_file = validate_file_exists(spec_dir, "tasks.md")
 
         # Validate file contents
-        validate_file_sections(spec_file, SPEC_SECTIONS)
+        validate_file_sections(requirements_file, REQUIREMENTS_SECTIONS)
         validate_file_sections(plan_file, PLAN_SECTIONS)
         validate_file_sections(tasks_file, TASKS_SECTIONS)
 
@@ -150,7 +150,7 @@ def main():
         print("\n" + "-" * 80)
         print("\nPlease ensure spec-driven-dev has completed successfully before")
         print("running implementation. The spec directory should contain:")
-        print("  - spec.md (with Overview, Requirements, Success Criteria)")
+        print("  - requirements.md (with Overview, Requirements, Success Criteria)")
         print("  - plan.md (with Implementation Phases)")
         print("  - tasks.md (with properly formatted tasks: ### T001: ...)")
         sys.exit(1)
