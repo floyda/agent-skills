@@ -1,11 +1,22 @@
 ---
 name: spec-driven-dev
-description: Structured workflow for spec-driven software development with AI. Use when creating or fixing features in expanding projects that need clear requirements, implementation plans, and task breakdowns. Guides through investigation, analysis, spec definition, planning, and task decomposition with reflection checkpoints throughout.
+description: Structured workflow for spec-driven software development with AI. Optimized for Python projects (libraries, CLI/TUI apps, data tools) as well as web backends. Use when creating or fixing features in expanding projects that need clear requirements, implementation plans, and task breakdowns. Guides through investigation, analysis, spec definition, planning, and task decomposition with reflection checkpoints throughout.
 ---
 
 # Spec-Driven Development Workflow
 
 Transform vague requirements into executable, trackable development tasks through a systematic investigation, analysis, and planning process.
+
+## About This Skill
+
+This workflow is particularly effective for:
+- **Python Libraries** - Designing public APIs, managing backward compatibility, packaging
+- **CLI/TUI Applications** - Planning user interactions, keyboard shortcuts, command structures
+- **Data Processing Tools** - Designing pipelines, error handling, data integrity
+- **Web Backends** - Traditional REST APIs, authentication, integrations
+- **Complex Features** - Any significant change requiring clear scoping and coordination
+
+The skill includes Python-specific guidance on dependency management, testing patterns, packaging, and type safety throughout the workflow.
 
 ## Workflow Overview
 
