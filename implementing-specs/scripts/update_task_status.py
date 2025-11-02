@@ -3,14 +3,14 @@
 Update task status in tasks.md file.
 
 This script helps maintain task tracking during implementation by updating
-task statuses in the tasks.md file produced by spec-driven-dev.
+task statuses (checkboxes) in the tasks.md file produced by spec-driven-dev.
 
 Usage:
     python update_task_status.py <tasks_file> <task_id> <status>
 
 Example:
     python update_task_status.py specs/features/autocomplete/tasks.md T001 completed
-    python update_task_status.py specs/defects/pagination/tasks.md T005 in_progress
+    python update_task_status.py specs/defects/pagination/tasks.md T005 pending
 """
 
 import sys
@@ -18,9 +18,9 @@ import re
 from pathlib import Path
 from typing import Literal
 
-Status = Literal["pending", "in_progress", "completed", "blocked"]
+Status = Literal["pending", "completed"]
 
-VALID_STATUSES = ["pending", "in_progress", "completed", "blocked"]
+VALID_STATUSES = ["pending", "completed"]
 
 def update_task_status(tasks_file: Path, task_id: str, new_status: Status) -> bool:
     """
@@ -29,7 +29,7 @@ def update_task_status(tasks_file: Path, task_id: str, new_status: Status) -> bo
     Args:
         tasks_file: Path to the tasks.md file
         task_id: Task identifier (e.g., "T001", "T005")
-        new_status: New status (pending, in_progress, completed, blocked)
+        new_status: New status (pending = unchecked, completed = checked)
 
     Returns:
         True if update was successful, False otherwise
@@ -44,16 +44,13 @@ def update_task_status(tasks_file: Path, task_id: str, new_status: Status) -> bo
 
     content = tasks_file.read_text()
 
-    # Find the task heading and update the status line that follows
-    # Pattern matches: ### T001: Task description
-    # Followed by: **Status**: <current_status>
-    task_pattern = rf"^(###\s+{task_id}:\s+.+?)$\s+^\*\*Status\*\*:\s*\w+"
+    # Pattern matches: - [ ] T001: Task description  or  - [x] T001: Task description
+    task_pattern = rf"^- \[([ x])\] {task_id}:"
 
-    def replace_status(match):
-        task_line = match.group(1)
-        return f"{task_line}\n**Status**: {new_status}"
+    checkbox = " " if new_status == "pending" else "x"
+    replacement = f"- [{checkbox}] {task_id}:"
 
-    updated_content, count = re.subn(task_pattern, replace_status, content, flags=re.MULTILINE)
+    updated_content, count = re.subn(task_pattern, replacement, content, flags=re.MULTILINE)
 
     if count == 0:
         print(f"Warning: Task {task_id} not found in {tasks_file}", file=sys.stderr)
@@ -75,16 +72,18 @@ def list_tasks(tasks_file: Path) -> None:
 
     content = tasks_file.read_text()
 
-    # Match task headers followed by status lines
-    pattern = r"^###\s+(T\d{3}):\s+(.+?)$\s+^\*\*Status\*\*:\s*(\w+)"
+    # Match checkbox tasks: - [ ] T001: Description  or  - [x] T001: Description
+    pattern = r"^- \[([ x])\] (T\d{3}):\s+(.+?)$"
 
     print(f"\nTasks in {tasks_file}:")
     print("-" * 80)
 
     for match in re.finditer(pattern, content, re.MULTILINE):
-        task_id = match.group(1)
-        description = match.group(2).strip()
-        status = match.group(3).strip()
+        checkbox = match.group(1)
+        task_id = match.group(2)
+        description = match.group(3).strip()
+
+        status = "completed" if checkbox == "x" else "pending"
 
         print(f"{task_id}: {description[:60]}... [{status}]")
 

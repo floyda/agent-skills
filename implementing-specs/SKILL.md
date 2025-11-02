@@ -10,9 +10,9 @@ description: Implements Python features/fixes from spec-driven-dev artifacts (re
 This skill provides a structured implementation workflow for executing software specifications created by the spec-driven-dev skill. It follows the practices and standards expected from a principal-level Python software developer, including test-driven development (TDD), type safety, comprehensive testing, and rigorous quality gates.
 
 The skill is designed to work with the three core artifacts produced by spec-driven-dev:
-- **requirements.md**: Feature specification with requirements and success criteria
+- **requirements.md**: Feature specification with requirements and acceptance criteria
 - **plan.md**: Implementation plan broken down into phases
-- **tasks.md**: Dependency-ordered task list with identifiers (T001, T002, etc.)
+- **tasks.md**: Dependency-ordered task list with checkbox format (- [ ] T001: Task description)
 
 ## Skill Directory Location
 
@@ -104,7 +104,7 @@ For each task, follow test-driven development (see `<SKILL_DIR>/references/tdd_w
 1. **🔴 Red** - Write failing test
 2. **🟢 Green** - Minimal code to pass
 3. **🔵 Refactor** - Apply `<SKILL_DIR>/references/python_best_practices.md`: type hints, docstrings, clean code
-4. **Update task status**:
+4. **Mark task complete** by checking the box in tasks.md or using:
    ```bash
    python <SKILL_DIR>/scripts/update_task_status.py <spec-directory>/tasks.md <task-id> completed
    ```
@@ -197,7 +197,7 @@ Ensure tasks.md reflects final status of all tasks:
 python <SKILL_DIR>/scripts/update_task_status.py <spec-directory>/tasks.md
 ```
 
-Review the output and verify all tasks are marked appropriately (completed, blocked, etc.).
+Review the output and verify all tasks are marked appropriately (checked if completed).
 
 #### 3.5 Implementation Summary
 
@@ -223,10 +223,7 @@ If during implementation a blocker is encountered or the spec is found to be und
    - Provide context about why it's a blocker
    - Suggest potential solutions if possible
    - Ask for clarification or decision
-4. **Mark affected task as blocked**:
-   ```bash
-   python <SKILL_DIR>/scripts/update_task_status.py <spec-directory>/tasks.md <task-id> blocked
-   ```
+4. **Add a note** in tasks.md documenting the blocker (leave task unchecked)
 5. **Do not proceed** until the blocker is resolved
 
 Never make assumptions or workarounds that deviate from the spec without explicit user approval.
@@ -255,11 +252,14 @@ MIN_COVERAGE=90 bash <SKILL_DIR>/scripts/check_quality_gates.sh
 
 ### update_task_status.py
 
-Updates task status in tasks.md file. Valid statuses: `pending`, `in_progress`, `completed`, `blocked`
+Updates task checkbox status in tasks.md file. Valid statuses: `pending` (unchecked), `completed` (checked)
 
 ```bash
-# Update task
+# Mark task as complete (check the box)
 python <SKILL_DIR>/scripts/update_task_status.py specs/features/autocomplete/tasks.md T005 completed
+
+# Mark task as pending (uncheck the box)
+python <SKILL_DIR>/scripts/update_task_status.py specs/features/autocomplete/tasks.md T005 pending
 
 # List all tasks
 python <SKILL_DIR>/scripts/update_task_status.py specs/features/autocomplete/tasks.md

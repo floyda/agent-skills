@@ -79,67 +79,29 @@ cp -r commit-prep ~/.codex/skills/
 cp -r skill-creator ~/.codex/skills/
 ```
 
-#### 2. Create Skills Enumerator Script
+#### 2. Use the Skills Enumerator Script
 
-Create a `list-skills` script in your PATH (e.g., `~/.local/bin/list-skills` or `/usr/local/bin/list-skills`):
+This repository includes a `list-skills` script at `scripts/list-skills`. You can use it directly or copy it to your PATH:
 
-```python
-#!/usr/bin/env python3
-"""Skills enumerator for Codex CLI."""
-
-import json
-import sys
-from pathlib import Path
-from typing import Any
-
-import yaml
-
-
-def find_skills(skills_dir: Path) -> list[dict[str, Any]]:
-    """Find all SKILL.md files and parse their frontmatter."""
-    skills = []
-
-    for skill_file in skills_dir.glob("**/SKILL.md"):
-        try:
-            content = skill_file.read_text()
-
-            # Extract YAML frontmatter
-            if content.startswith("---"):
-                parts = content.split("---", 2)
-                if len(parts) >= 3:
-                    frontmatter = yaml.safe_load(parts[1])
-                    skills.append({
-                        "name": frontmatter.get("name", ""),
-                        "description": frontmatter.get("description", ""),
-                        "path": str(skill_file.parent),
-                    })
-        except Exception as e:
-            print(f"Warning: Failed to parse {skill_file}: {e}", file=sys.stderr)
-
-    return skills
-
-
-def main() -> None:
-    """List available skills as JSON."""
-    skills_dir = Path.home() / ".codex" / "skills"
-
-    if not skills_dir.exists():
-        print(f"Error: Skills directory not found: {skills_dir}", file=sys.stderr)
-        sys.exit(1)
-
-    skills = find_skills(skills_dir)
-    print(json.dumps(skills, indent=2))
-
-
-if __name__ == "__main__":
-    main()
-```
-
-Make it executable:
+**Option A: Copy to PATH**
 
 ```bash
+# Copy to a directory in your PATH
+cp scripts/list-skills ~/.local/bin/
 chmod +x ~/.local/bin/list-skills
 ```
+
+**Option B: Use directly**
+
+```bash
+# Run directly from the skills directory
+/Users/yourusername/.claude/skills/scripts/list-skills
+
+# Or add an alias to your shell config (.bashrc, .zshrc, etc.)
+alias list-skills="/path/to/.claude/skills/scripts/list-skills"
+```
+
+The script automatically discovers all skills with SKILL.md files and outputs them as JSON with names, descriptions, and paths.
 
 #### 3. Configure AGENTS.md
 
@@ -269,6 +231,49 @@ Here's how the development skills work together:
 # - Runs full test suite
 # - Drafts commit message
 ```
+
+## Skill Alignment Validation
+
+The `spec-driven-dev` and `implementing-specs` skills must remain aligned - the output from one must match the expected input of the other.
+
+### Validating Alignment
+
+Run the alignment validation script to check compatibility:
+
+```bash
+python3 scripts/validate_skill_alignment.py
+```
+
+This automated script:
+- Extracts expectations from `implementing-specs/scripts/validate_spec_artifacts.py`
+- Extracts promises from `spec-driven-dev/references/templates.md`
+- Compares them and reports any mismatches
+- Returns errors for critical issues, warnings for minor discrepancies
+
+### Manual Validation
+
+You can also validate individual spec directories before implementation:
+
+```bash
+python3 implementing-specs/scripts/validate_spec_artifacts.py specs/features/my-feature
+```
+
+This ensures the spec directory contains:
+- `requirements.md` with required sections (Overview, Requirements)
+- `plan.md` with required sections (Goal, Approach)
+- `tasks.md` with properly formatted checkbox tasks (`- [ ] T001: Description`)
+
+### Maintaining Alignment
+
+When updating either skill:
+
+1. **Update validation script first** - `implementing-specs/scripts/validate_spec_artifacts.py`
+2. **Update templates** - `spec-driven-dev/references/templates.md`
+3. **Run alignment validation** - `python3 scripts/validate_skill_alignment.py`
+4. **Test end-to-end** - Generate spec → validate → implement
+5. **Update documentation** - Both SKILL.md files and `SKILL_ALIGNMENT_VALIDATION.md`
+
+See `SKILL_ALIGNMENT_VALIDATION.md` for detailed validation documentation and troubleshooting.
 
 ## Key Differences: Claude Code vs Codex CLI
 

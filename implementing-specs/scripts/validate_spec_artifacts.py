@@ -74,13 +74,13 @@ def validate_tasks_format(tasks_file: Path) -> None:
     """Validate that tasks.md contains properly formatted tasks."""
     content = tasks_file.read_text()
 
-    # Check for at least one task with T### format
+    # Check for at least one task with T### format in checkbox
     import re
-    task_pattern = r"^###\s+T\d{3}"
+    task_pattern = r"^- \[([ x])\] T\d{3}:"
 
     if not re.search(task_pattern, content, re.MULTILINE):
         raise ValidationError(
-            "tasks.md does not contain any tasks in the expected format (### T001: ...)"
+            "tasks.md does not contain any tasks in the expected format (- [ ] T001: ...)"
         )
 
 
@@ -153,7 +153,7 @@ def main():
         print("running implementation. The spec directory should contain:")
         print("  - requirements.md (with Overview, Requirements)")
         print("  - plan.md (with Goal, Approach)")
-        print("  - tasks.md (with Phase sections and tasks: ### T001: ...)")
+        print("  - tasks.md (with Phase sections and checkbox tasks: - [ ] T001: ...)")
         sys.exit(1)
 
 
