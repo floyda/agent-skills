@@ -28,12 +28,14 @@ REQUIREMENTS_SECTIONS = [
 
 # Required sections in plan.md
 PLAN_SECTIONS = [
-    "## Implementation Phases"
+    "## Goal",
+    "## Approach"
 ]
 
 # Required sections in tasks.md
+# Tasks are organized by phase, so we check for at least one phase section
 TASKS_SECTIONS = [
-    "## Tasks"
+    "## Phase"
 ]
 
 
@@ -150,8 +152,8 @@ def main():
         print("\nPlease ensure spec-driven-dev has completed successfully before")
         print("running implementation. The spec directory should contain:")
         print("  - requirements.md (with Overview, Requirements)")
-        print("  - plan.md (with Implementation Phases)")
-        print("  - tasks.md (with properly formatted tasks: ### T001: ...)")
+        print("  - plan.md (with Goal, Approach)")
+        print("  - tasks.md (with Phase sections and tasks: ### T001: ...)")
         sys.exit(1)
 
 

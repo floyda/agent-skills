@@ -267,7 +267,7 @@ python <SKILL_DIR>/scripts/update_task_status.py specs/features/autocomplete/tas
 
 ### validate_spec_artifacts.py
 
-Validates spec directory contains all required files with proper structure (spec.md, plan.md, tasks.md with correct sections/format).
+Validates spec directory contains all required files with proper structure (requirements.md, plan.md, tasks.md with correct sections/format).
 
 ```bash
 python <SKILL_DIR>/scripts/validate_spec_artifacts.py specs/features/autocomplete-improvements
