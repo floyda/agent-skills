@@ -14,6 +14,21 @@ The skill is designed to work with the three core artifacts produced by spec-dri
 - **plan.md**: Implementation plan broken down into phases
 - **tasks.md**: Dependency-ordered task list with identifiers (T001, T002, etc.)
 
+## Skill Directory Location
+
+**IMPORTANT**: This skill's scripts and references must be accessed using their absolute paths. When you invoke this skill:
+
+1. Determine where this SKILL.md file is located (the agent knows the skill path when loading it)
+2. The scripts are in `<skill-directory>/scripts/`
+3. The references are in `<skill-directory>/references/`
+
+Throughout this document, `<SKILL_DIR>` is used as a placeholder. Replace it with the actual path to this skill's directory before running any commands.
+
+Common locations:
+- Claude Code: `~/.claude/skills/implementing-specs/`
+- Codex CLI: `~/.codex/skills/implementing-specs/`
+- Custom: wherever the user has installed this skill
+
 ## When to Use This Skill
 
 Use this skill when:
@@ -44,7 +59,7 @@ The user will specify the spec directory location. Common patterns:
 Run the validation script to ensure all required files exist and are well-formed:
 
 ```bash
-python scripts/validate_spec_artifacts.py <spec-directory>
+python <SKILL_DIR>/scripts/validate_spec_artifacts.py <spec-directory>
 ```
 
 Expected output: ✅ confirmation that spec.md, plan.md, and tasks.md are present and properly structured.
@@ -58,7 +73,7 @@ Read all three artifacts thoroughly to understand:
 - **plan.md**: Implementation phases and their objectives
 - **tasks.md**: Specific tasks to complete, dependencies, and order
 
-Load `references/python_best_practices.md` into context for guidance on coding standards.
+Load `<SKILL_DIR>/references/python_best_practices.md` into context for guidance on coding standards.
 
 #### 1.4 Confirm Understanding
 
@@ -84,14 +99,14 @@ Review tasks.md and identify all tasks belonging to the current phase. Tasks are
 
 #### 2.3 Implement Using TDD
 
-For each task, follow test-driven development (see `references/tdd_workflow.md` for detailed guidance):
+For each task, follow test-driven development (see `<SKILL_DIR>/references/tdd_workflow.md` for detailed guidance):
 
 1. **🔴 Red** - Write failing test
 2. **🟢 Green** - Minimal code to pass
-3. **🔵 Refactor** - Apply `references/python_best_practices.md`: type hints, docstrings, clean code
+3. **🔵 Refactor** - Apply `<SKILL_DIR>/references/python_best_practices.md`: type hints, docstrings, clean code
 4. **Update task status**:
    ```bash
-   python scripts/update_task_status.py <spec-directory>/tasks.md <task-id> completed
+   python <SKILL_DIR>/scripts/update_task_status.py <spec-directory>/tasks.md <task-id> completed
    ```
 
 #### 2.4 Run Quality Gates After Each Task
@@ -99,7 +114,7 @@ For each task, follow test-driven development (see `references/tdd_workflow.md` 
 After completing each task, run automated quality checks:
 
 ```bash
-bash scripts/check_quality_gates.sh
+bash <SKILL_DIR>/scripts/check_quality_gates.sh
 ```
 
 This script runs:
@@ -120,7 +135,7 @@ This script runs:
 
 #### 2.5 Phase Completion Review
 
-When all tasks in a phase are complete, perform a comprehensive manual review using `references/code_review_checklist.md`.
+When all tasks in a phase are complete, perform a comprehensive manual review using `<SKILL_DIR>/references/code_review_checklist.md`.
 
 For each failing item:
 1. Document the issue
@@ -161,7 +176,7 @@ Ensure:
 Run quality gates one final time on the entire codebase:
 
 ```bash
-bash scripts/check_quality_gates.sh
+bash <SKILL_DIR>/scripts/check_quality_gates.sh
 ```
 
 All checks must pass with zero errors.
@@ -179,7 +194,7 @@ Update all relevant documentation:
 Ensure tasks.md reflects final status of all tasks:
 
 ```bash
-python scripts/update_task_status.py <spec-directory>/tasks.md
+python <SKILL_DIR>/scripts/update_task_status.py <spec-directory>/tasks.md
 ```
 
 Review the output and verify all tasks are marked appropriately (completed, blocked, etc.).
@@ -210,7 +225,7 @@ If during implementation a blocker is encountered or the spec is found to be und
    - Ask for clarification or decision
 4. **Mark affected task as blocked**:
    ```bash
-   python scripts/update_task_status.py <spec-directory>/tasks.md <task-id> blocked
+   python <SKILL_DIR>/scripts/update_task_status.py <spec-directory>/tasks.md <task-id> blocked
    ```
 5. **Do not proceed** until the blocker is resolved
 
@@ -225,17 +240,17 @@ Never make assumptions or workarounds that deviate from the spec without explici
 
 ## Script Reference
 
-This skill includes utility scripts in the `scripts/` directory:
+This skill includes utility scripts located at `<SKILL_DIR>/scripts/`:
 
 ### check_quality_gates.sh
 
 Runs all automated quality checks: linting (ruff), formatting (black, isort), type checking (mypy), spell checking (codespell), tests with coverage (pytest).
 
 ```bash
-bash scripts/check_quality_gates.sh
+bash <SKILL_DIR>/scripts/check_quality_gates.sh
 
 # Override default 80% coverage threshold
-MIN_COVERAGE=90 bash scripts/check_quality_gates.sh
+MIN_COVERAGE=90 bash <SKILL_DIR>/scripts/check_quality_gates.sh
 ```
 
 ### update_task_status.py
@@ -244,10 +259,10 @@ Updates task status in tasks.md file. Valid statuses: `pending`, `in_progress`, 
 
 ```bash
 # Update task
-python scripts/update_task_status.py specs/features/autocomplete/tasks.md T005 completed
+python <SKILL_DIR>/scripts/update_task_status.py specs/features/autocomplete/tasks.md T005 completed
 
 # List all tasks
-python scripts/update_task_status.py specs/features/autocomplete/tasks.md
+python <SKILL_DIR>/scripts/update_task_status.py specs/features/autocomplete/tasks.md
 ```
 
 ### validate_spec_artifacts.py
@@ -255,12 +270,12 @@ python scripts/update_task_status.py specs/features/autocomplete/tasks.md
 Validates spec directory contains all required files with proper structure (spec.md, plan.md, tasks.md with correct sections/format).
 
 ```bash
-python scripts/validate_spec_artifacts.py specs/features/autocomplete-improvements
+python <SKILL_DIR>/scripts/validate_spec_artifacts.py specs/features/autocomplete-improvements
 ```
 
 ## Reference Documents
 
-Load these from `references/` as needed:
+Load these from `<SKILL_DIR>/references/` as needed:
 
 - **python_best_practices.md**: Type safety, testing standards, SOLID principles, error handling, security. Load at implementation start and when questions arise about coding standards.
 
