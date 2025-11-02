@@ -51,7 +51,7 @@ Create `plan.md` with Goal, Approach (phases with Priority/Requirements/Strategy
 **See templates.md** for complete plan template and examples. **See workflow-guide.md** for phase organization patterns (including Python library and CLI/TUI examples) and technical considerations.
 
 ### Step 5: Break Down Tasks
-Create `tasks.md` with tasks organized by phase. Each task should be atomic, specific, and completable in one focused session. Link to plan phases and requirements.
+Create `tasks.md` with tasks organized by phase. Each task must have a unique ID (T001, T002, etc.), be formatted as a heading (`### T001: Task title`), include a status line (`**Status**: pending`), and be atomic, specific, and completable in one focused session. Link to plan phases and requirements.
 
 **See templates.md** for complete tasks template and examples. **See workflow-guide.md** for task breakdown strategies, granularity guidance, and Python-specific testing patterns.
 
@@ -61,7 +61,7 @@ When a coding agent picks up these specs:
 
 1. **Read all three files** in order: requirements → plan → tasks
 2. **Work in phases**: Complete Phase 1 before moving to Phase 2
-3. **Mark progress**: Update tasks.md with `[x]` as work completes
+3. **Mark progress**: Update task status from `pending` → `in_progress` → `completed` as work progresses
 4. **Stay bounded**: Focus on the current phase's tasks only
 5. **Verify alignment**: Check that implementation meets acceptance criteria
 

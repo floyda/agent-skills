@@ -20,13 +20,7 @@ from typing import Literal
 
 Status = Literal["pending", "in_progress", "completed", "blocked"]
 
-# Status emoji mappings
-STATUS_EMOJI = {
-    "pending": "⏳",
-    "in_progress": "🔄",
-    "completed": "✅",
-    "blocked": "🚫"
-}
+VALID_STATUSES = ["pending", "in_progress", "completed", "blocked"]
 
 def update_task_status(tasks_file: Path, task_id: str, new_status: Status) -> bool:
     """
@@ -44,30 +38,22 @@ def update_task_status(tasks_file: Path, task_id: str, new_status: Status) -> bo
         print(f"Error: Tasks file not found: {tasks_file}", file=sys.stderr)
         return False
 
-    if new_status not in STATUS_EMOJI:
-        print(f"Error: Invalid status '{new_status}'. Must be one of: {', '.join(STATUS_EMOJI.keys())}", file=sys.stderr)
+    if new_status not in VALID_STATUSES:
+        print(f"Error: Invalid status '{new_status}'. Must be one of: {', '.join(VALID_STATUSES)}", file=sys.stderr)
         return False
 
     content = tasks_file.read_text()
 
-    # Pattern to match task lines with various status formats
-    # Matches: ### T001: Task description (pending)
-    # Or: ### T001 ⏳ Task description
-    # Or: ### T001: Task description
-    pattern = rf"^(###\s+{task_id}[\s:]+)(.+?)(\s*\([^)]+\)|\s*[⏳🔄✅🚫])?\s*$"
+    # Find the task heading and update the status line that follows
+    # Pattern matches: ### T001: Task description
+    # Followed by: **Status**: <current_status>
+    task_pattern = rf"^(###\s+{task_id}:\s+.+?)$\s+^\*\*Status\*\*:\s*\w+"
 
     def replace_status(match):
-        prefix = match.group(1)  # "### T001: " or "### T001 "
-        description = match.group(2).strip()  # "Task description"
+        task_line = match.group(1)
+        return f"{task_line}\n**Status**: {new_status}"
 
-        # Remove any existing emoji from description
-        for emoji in STATUS_EMOJI.values():
-            description = description.replace(emoji, "").strip()
-
-        emoji = STATUS_EMOJI[new_status]
-        return f"{prefix}{emoji} {description}"
-
-    updated_content, count = re.subn(pattern, replace_status, content, flags=re.MULTILINE)
+    updated_content, count = re.subn(task_pattern, replace_status, content, flags=re.MULTILINE)
 
     if count == 0:
         print(f"Warning: Task {task_id} not found in {tasks_file}", file=sys.stderr)
@@ -77,7 +63,7 @@ def update_task_status(tasks_file: Path, task_id: str, new_status: Status) -> bo
         print(f"Warning: Multiple matches found for {task_id}. Updated {count} occurrences.", file=sys.stderr)
 
     tasks_file.write_text(updated_content)
-    print(f"✓ Updated {task_id} to '{new_status}' ({STATUS_EMOJI[new_status]})")
+    print(f"✓ Updated {task_id} to '{new_status}'")
     return True
 
 
@@ -89,8 +75,8 @@ def list_tasks(tasks_file: Path) -> None:
 
     content = tasks_file.read_text()
 
-    # Match task headers
-    pattern = r"^###\s+(T\d{3})[:\s]+(.+?)$"
+    # Match task headers followed by status lines
+    pattern = r"^###\s+(T\d{3}):\s+(.+?)$\s+^\*\*Status\*\*:\s*(\w+)"
 
     print(f"\nTasks in {tasks_file}:")
     print("-" * 80)
@@ -98,13 +84,7 @@ def list_tasks(tasks_file: Path) -> None:
     for match in re.finditer(pattern, content, re.MULTILINE):
         task_id = match.group(1)
         description = match.group(2).strip()
-
-        # Detect status from emoji or (status) notation
-        status = "pending"  # default
-        for status_key, emoji in STATUS_EMOJI.items():
-            if emoji in description or f"({status_key})" in description:
-                status = status_key
-                break
+        status = match.group(3).strip()
 
         print(f"{task_id}: {description[:60]}... [{status}]")
 

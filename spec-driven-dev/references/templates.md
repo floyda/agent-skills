@@ -84,31 +84,58 @@ Use these templates when creating requirements.md, plan.md, and tasks.md files.
 **Plan Reference**: See Phase 1 in plan.md
 **Requirements**: #1, #2 from requirements.md
 
-- [ ] Create [specific component/module/file] with [key functionality]
-- [ ] Implement [specific method/function] to handle [use case]
-- [ ] Add [validation/error handling] for [edge case scenario]
-- [ ] Write [unit/integration] tests for [component] covering [scenarios]
-- [ ] Update [documentation/README] to reflect [changes]
+### T001: Create [specific component/module/file] with [key functionality]
+**Status**: pending
+
+### T002: Implement [specific method/function] to handle [use case]
+**Status**: pending
+
+### T003: Add [validation/error handling] for [edge case scenario]
+**Status**: pending
+
+### T004: Write [unit/integration] tests for [component] covering [scenarios]
+**Status**: pending
+
+### T005: Update [documentation/README] to reflect [changes]
+**Status**: pending
 
 ## Phase 2: [Phase Name from plan.md]
 **Plan Reference**: See Phase 2 in plan.md
 **Requirements**: #3, #4 from requirements.md
 
-- [ ] Integrate [component A] with [component B] via [interface/API]
-- [ ] Configure [service/library] with [specific settings]
-- [ ] Implement [feature] following [pattern/approach]
-- [ ] Add [logging/monitoring] for [operations]
-- [ ] Test [integration scenario] with [test data]
+### T006: Integrate [component A] with [component B] via [interface/API]
+**Status**: pending
+
+### T007: Configure [service/library] with [specific settings]
+**Status**: pending
+
+### T008: Implement [feature] following [pattern/approach]
+**Status**: pending
+
+### T009: Add [logging/monitoring] for [operations]
+**Status**: pending
+
+### T010: Test [integration scenario] with [test data]
+**Status**: pending
 
 ## Phase 3: [Phase Name from plan.md]
 **Plan Reference**: See Phase 3 in plan.md
 **Requirements**: #5 from requirements.md
 
-- [ ] Optimize [component] for [performance metric]
-- [ ] Refactor [code section] to improve [quality aspect]
-- [ ] Add [UI polish/error messages/user feedback]
-- [ ] Conduct [end-to-end/performance] testing
-- [ ] Document [usage examples/API reference]
+### T011: Optimize [component] for [performance metric]
+**Status**: pending
+
+### T012: Refactor [code section] to improve [quality aspect]
+**Status**: pending
+
+### T013: Add [UI polish/error messages/user feedback]
+**Status**: pending
+
+### T014: Conduct [end-to-end/performance] testing
+**Status**: pending
+
+### T015: Document [usage examples/API reference]
+**Status**: pending
 ```
 
 ## Good vs Bad Examples
@@ -164,20 +191,28 @@ Use these templates when creating requirements.md, plan.md, and tasks.md files.
 ### Tasks - Granularity
 
 **Good (Python library):**
-> - [ ] Create TypedDict schemas for API response validation with required/optional fields
+> ### T001: Create TypedDict schemas for API response validation with required/optional fields
+> **Status**: pending
 
 **Good (CLI app):**
-> - [ ] Implement search highlighting in the log viewer with keyword matching
+> ### T012: Implement search highlighting in the log viewer with keyword matching
+> **Status**: pending
 
 **Bad (too broad):**
-> - [ ] Build validation system
+> ### T001: Build validation system
+> **Status**: pending
 
 **Bad (too granular):**
-> - [ ] Import pydantic
-> - [ ] Add pydantic to requirements.txt
-> - [ ] Create BaseModel class
-> - [ ] Test BaseModel
-> - [ ] Add to __init__.py
+> ### T001: Import pydantic
+> **Status**: pending
+> ### T002: Add pydantic to requirements.txt
+> **Status**: pending
+> ### T003: Create BaseModel class
+> **Status**: pending
+> ### T004: Test BaseModel
+> **Status**: pending
+> ### T005: Add to __init__.py
+> **Status**: pending
 
 ## Tips for Each Document Type
 
@@ -196,8 +231,9 @@ Use these templates when creating requirements.md, plan.md, and tasks.md files.
 - Use priorities to guide execution order
 
 ### tasks.md
+- Each task must have a unique ID (T001, T002, etc.) formatted as a heading
+- Each task should include a status line: **Status**: pending|in_progress|completed|blocked
 - Each task should be completable in one focused work session
 - Tasks should be ordered logically for execution
 - Link back to both plan phases and requirements
-- Use checkboxes for tracking progress
 - Balance between actionable and not too granular

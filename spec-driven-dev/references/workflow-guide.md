@@ -291,45 +291,58 @@ A good task is:
 ### Task Description Format
 
 **Good Structure:**
-```
-- [ ] Create User authentication service with login and token generation
+```markdown
+### T001: Create User authentication service with login and token generation
+**Status**: pending
 ```
 
-**Better Structure (for complex tasks):**
-```
-- [ ] Create User authentication service
-  - Implement login method with email/password validation
-  - Generate JWT tokens with 24-hour expiration
-  - Add token refresh capability
-  - Include rate limiting (5 attempts per minute)
+**Better Structure (with task details):**
+```markdown
+### T001: Create User authentication service
+**Status**: pending
+
+Implementation details:
+- Implement login method with email/password validation
+- Generate JWT tokens with 24-hour expiration
+- Add token refresh capability
+- Include rate limiting (5 attempts per minute)
 ```
 
 **Python Library Task Example:**
-```
-- [ ] Implement ValidationError class with field-level error messages
-  - Create custom exception inheriting from Exception
-  - Store field names and validation failure reasons
-  - Generate formatted error message showing which fields failed
-  - Add repr() for debugging and str() for user display
-  - Write unit tests covering single and multiple field errors
+```markdown
+### T005: Implement ValidationError class with field-level error messages
+**Status**: pending
+
+Implementation details:
+- Create custom exception inheriting from Exception
+- Store field names and validation failure reasons
+- Generate formatted error message showing which fields failed
+- Add repr() for debugging and str() for user display
+- Write unit tests covering single and multiple field errors
 ```
 
 **CLI/TUI Task Example:**
-```
-- [ ] Add query filtering by severity level
-  - Parse severity level argument from CLI flags or interactive input
-  - Filter in-memory results using severity comparison
-  - Display filtered count in status bar
-  - Write pytest tests with sample log data covering all severity levels
+```markdown
+### T012: Add query filtering by severity level
+**Status**: pending
+
+Implementation details:
+- Parse severity level argument from CLI flags or interactive input
+- Filter in-memory results using severity comparison
+- Display filtered count in status bar
+- Write pytest tests with sample log data covering all severity levels
 ```
 
 **Data Tool Task Example:**
-```
-- [ ] Create DataFrame transformation pipeline
-  - Build transformation step abstraction that chains operations
-  - Implement error handling to capture row numbers when steps fail
-  - Log intermediate results for debugging
-  - Write integration tests with sample CSV files
+```markdown
+### T008: Create DataFrame transformation pipeline
+**Status**: pending
+
+Implementation details:
+- Build transformation step abstraction that chains operations
+- Implement error handling to capture row numbers when steps fail
+- Log intermediate results for debugging
+- Write integration tests with sample CSV files
 ```
 
 ### Python Testing Patterns for Tasks
@@ -430,7 +443,7 @@ Reflection checkpoints:
 - [ ] Tasks link to plan phases and requirements
 - [ ] Each task is atomic and completable
 - [ ] Tasks are in logical execution order
-- [ ] Checkboxes present for tracking
+- [ ] Tasks have unique IDs (T001, T002, etc.) and status fields
 - [ ] Task granularity is appropriate
 - [ ] Document is readable in 1-2 minutes
 
@@ -471,8 +484,8 @@ Reflection checkpoints:
 ### When to Update Specs
 
 **During Implementation:**
-- Mark tasks complete with `[x]`
-- Add discovered tasks to appropriate phase
+- Update task status to `completed` as work finishes
+- Add discovered tasks to appropriate phase with new T### IDs
 - Update requirements if understanding changes
 - Document deviations in tasks.md
 
