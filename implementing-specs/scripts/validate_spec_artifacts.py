@@ -23,8 +23,7 @@ REQUIRED_FILES = ["requirements.md", "plan.md", "tasks.md"]
 # Required sections in requirements.md
 REQUIREMENTS_SECTIONS = [
     "## Overview",
-    "## Requirements",
-    "## Success Criteria"
+    "## Requirements"
 ]
 
 # Required sections in plan.md
@@ -150,7 +149,7 @@ def main():
         print("\n" + "-" * 80)
         print("\nPlease ensure spec-driven-dev has completed successfully before")
         print("running implementation. The spec directory should contain:")
-        print("  - requirements.md (with Overview, Requirements, Success Criteria)")
+        print("  - requirements.md (with Overview, Requirements)")
         print("  - plan.md (with Implementation Phases)")
         print("  - tasks.md (with properly formatted tasks: ### T001: ...)")
         sys.exit(1)
