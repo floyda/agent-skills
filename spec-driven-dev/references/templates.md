@@ -15,21 +15,21 @@ Use these templates when creating requirements.md, plan.md, and tasks.md files.
 ### 1. [First Requirement Title]
 
 **User Story**
-> As a [user type/role], I want [specific goal] so that [clear benefit or reason]
+- As a [user type/role], I want [specific goal] so that [clear benefit or reason]
 
 **Acceptance Criteria**
-> WHEN [specific condition or user action] THEN the system SHALL [expected behavior with measurable outcome]
-> WHEN [edge case or error condition] THEN the system SHALL [error handling or validation behavior]
-> WHEN [another relevant scenario] THEN the system SHALL [expected response]
+- WHEN [specific condition or user action] THEN the system SHALL [expected behavior with measurable outcome]
+- WHEN [edge case or error condition] THEN the system SHALL [error handling or validation behavior]
+- WHEN [another relevant scenario] THEN the system SHALL [expected response]
 
 ### 2. [Second Requirement Title]
 
 **User Story**
-> As a [user type/role], I want [specific goal] so that [clear benefit or reason]
+- As a [user type/role], I want [specific goal] so that [clear benefit or reason]
 
 **Acceptance Criteria**
-> WHEN [specific condition] THEN the system SHALL [expected behavior]
-> WHEN [edge case] THEN the system SHALL [error handling]
+- WHEN [specific condition] THEN the system SHALL [expected behavior]
+- WHEN [edge case] THEN the system SHALL [error handling]
 
 [Continue numbering for additional requirements...]
 ```
@@ -116,68 +116,68 @@ Use these templates when creating requirements.md, plan.md, and tasks.md files.
 ### Requirements - User Stories
 
 **Good (CLI app):**
-> As a developer, I want to filter log entries by severity level so that I can focus on errors and warnings during debugging.
+- As a developer, I want to filter log entries by severity level so that I can focus on errors and warnings during debugging.
 
 **Good (Python library):**
-> As a library user, I want to deserialize JSON data with automatic type validation so that I catch schema errors early.
+- As a library user, I want to deserialize JSON data with automatic type validation so that I catch schema errors early.
 
 **Good (Data tool):**
-> As an analyst, I want to transform CSV data with a declarative pipeline so that I can reuse transformations across projects.
+- As an analyst, I want to transform CSV data with a declarative pipeline so that I can reuse transformations across projects.
 
 **Bad (too vague):**
-> As a user, I want better filtering.
+- As a user, I want better filtering.
 
 **Bad (too technical):**
-> As a CLI, I want the system to call the filter_by_level() function with severity='ERROR'.
+- As a CLI, I want the system to call the filter_by_level() function with severity='ERROR'.
 
 ### Requirements - Acceptance Criteria
 
 **Good (CLI/TUI):**
-> WHEN a user presses `/` in the query window THEN the system SHALL open an interactive search prompt and highlight matching entries as they type.
+- WHEN a user presses `/` in the query window THEN the system SHALL open an interactive search prompt and highlight matching entries as they type.
 
 **Good (Library):**
-> WHEN invalid data is passed to the deserializer THEN the system SHALL raise ValidationError with a message describing which fields failed and why.
+- WHEN invalid data is passed to the deserializer THEN the system SHALL raise ValidationError with a message describing which fields failed and why.
 
 **Good (Data tool):**
-> WHEN a transformation step fails THEN the system SHALL log the error with source row number and halt with clear exit code.
+- WHEN a transformation step fails THEN the system SHALL log the error with source row number and halt with clear exit code.
 
 **Bad (not testable):**
-> WHEN there's a problem THEN show an error.
+- WHEN there's a problem THEN show an error.
 
 **Bad (too implementation-focused):**
-> WHEN user input fails regex THEN raise ValueError with code 422.
+- WHEN user input fails regex THEN raise ValueError with code 422.
 
 ### Plan - Strategy Descriptions
 
 **Good (Python library):**
-> Build a type-safe validation layer using Pydantic, then implement deserialization methods that leverage these validators. Add comprehensive error messages with field paths. Include optional type coercion for common patterns.
+- Build a type-safe validation layer using Pydantic, then implement deserialization methods that leverage these validators. Add comprehensive error messages with field paths. Include optional type coercion for common patterns.
 
 **Good (CLI app):**
-> Implement a query parser that builds AST structures, then create filter engines for different data sources. Start with in-memory filtering, add streaming support later.
+- Implement a query parser that builds AST structures, then create filter engines for different data sources. Start with in-memory filtering, add streaming support later.
 
 **Bad (too vague):**
-> Add validation.
+- Add validation.
 
 **Bad (too detailed/code-focused):**
-> Create ValidationService class with validate(data: dict) -> dict method that calls pydantic.BaseModel.model_validate()...
+- Create ValidationService class with validate(data: dict) -- dict method that calls pydantic.BaseModel.model_validate()...
 
 ### Tasks - Granularity
 
 **Good (Python library):**
-> - [ ] T001: Create TypedDict schemas for API response validation with required/optional fields
+- [ ] T001: Create TypedDict schemas for API response validation with required/optional fields
 
 **Good (CLI app):**
-> - [ ] T012: Implement search highlighting in the log viewer with keyword matching
+- [ ] T012: Implement search highlighting in the log viewer with keyword matching
 
 **Bad (too broad):**
-> - [ ] T001: Build validation system
+- [ ] T001: Build validation system
 
 **Bad (too granular):**
-> - [ ] T001: Import pydantic
-> - [ ] T002: Add pydantic to requirements.txt
-> - [ ] T003: Create BaseModel class
-> - [ ] T004: Test BaseModel
-> - [ ] T005: Add to __init__.py
+- [ ] T001: Import pydantic
+- [ ] T002: Add pydantic to requirements.txt
+- [ ] T003: Create BaseModel class
+- [ ] T004: Test BaseModel
+- [ ] T005: Add to __init__.py
 
 ## Tips for Each Document Type
 
