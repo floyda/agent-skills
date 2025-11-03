@@ -125,6 +125,8 @@ list-skills
 
 You should see JSON output listing all available skills with their names, descriptions, and paths.
 
+**Note:** The included `scripts/list-skills` uses `uv run` for dependency management, which automatically handles Python dependencies (python-frontmatter, pyyaml). It works with both `~/.claude/skills` and `~/.codex/skills` directories.
+
 ## Usage
 
 ### In Claude Code
@@ -162,9 +164,31 @@ codex
 "Use the spec-driven-dev skill to plan this feature"
 ```
 
+## Repository Structure
+
+This repository includes both individual skills and shared utilities:
+
+```
+.claude/skills/
+├── README.md                          # This file
+├── SKILL_ALIGNMENT_VALIDATION.md      # Alignment validation guide
+├── scripts/                           # Shared utility scripts
+│   ├── list-skills                    # Skills discovery for Codex CLI
+│   └── validate_skill_alignment.py    # Validates spec-driven-dev ↔ implementing-specs
+├── spec-driven-dev/                   # Spec creation skill
+├── implementing-specs/                # Spec implementation skill
+├── commit-prep/                       # Commit preparation skill
+├── skill-creator/                     # Skill creation guide
+└── document-skills/                   # Document processing skills
+    ├── docx/
+    ├── pdf/
+    ├── pptx/
+    └── xlsx/
+```
+
 ## Skill Structure
 
-Each skill follows this structure:
+Each individual skill follows this structure:
 
 ```
 skill-name/
@@ -274,6 +298,21 @@ When updating either skill:
 5. **Update documentation** - Both SKILL.md files and `SKILL_ALIGNMENT_VALIDATION.md`
 
 See `SKILL_ALIGNMENT_VALIDATION.md` for detailed validation documentation and troubleshooting.
+
+### Utility Scripts
+
+This repository includes two utility scripts in `scripts/`:
+
+1. **`list-skills`** - Discovers and enumerates all skills with SKILL.md files
+   - Used by Codex CLI for automatic skill discovery
+   - Outputs JSON with skill names, descriptions, and paths
+   - Uses `uv run` for zero-config dependency management
+   - Works with both `~/.claude/skills` and `~/.codex/skills`
+
+2. **`validate_skill_alignment.py`** - Validates compatibility between spec-driven-dev and implementing-specs
+   - Compares template output format with validation expectations
+   - Reports errors for critical mismatches and warnings for minor issues
+   - Run regularly when updating either skill to catch breaking changes
 
 ## Key Differences: Claude Code vs Codex CLI
 
